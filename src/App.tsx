@@ -46,7 +46,7 @@ export default function App() {
   const [selectedSpace, setSelectedSpace] = useState('');
   const [intensity, setIntensity] = useState(50); // 0: Modern, 100: Traditional
   const [visualStyle, setVisualStyle] = useState<'human' | 'symbol' | 'space'>('symbol');
-  const [artStyle, setArtStyle] = useState<'musindo' | 'minhwa' | 'bulhwa' | 'modern'>('musindo');
+  const [artStyle, setArtStyle] = useState<'musindo' | 'minhwa' | 'modern'>('musindo');
   const [history, setHistory] = useState<{
     input: string, 
     imageUrl: string, 
@@ -445,7 +445,6 @@ export default function App() {
               {[
                 { id: 'musindo', name: '무신도' },
                 { id: 'minhwa', name: '민화' },
-                { id: 'bulhwa', name: '불화' },
                 { id: 'modern', name: '현대적' }
               ].map((style) => (
                 <button

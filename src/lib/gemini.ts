@@ -38,7 +38,8 @@ export async function interpretUserIntent(userInput: string): Promise<Interpreta
   const response = await getAIClient().models.generateContent({
     model: "gemini-3.1-pro-preview",
     contents: `
-      사용자의 의도를 한국 전통 무속 상징 체계로 해석해줘.
+      사용자의 의도를 '한국 전통 무속(Muism) 전용' 상징 체계로 해석해줘.
+      중요: 불교(부처, 사찰, 스님)와 무속은 엄격히 구분되어야 함. 무속 고유의 원형과 설화(바리공주, 성주신 등)에 집중할 것.
       입력: "${userInput}"
 
       지식 기반:
@@ -51,21 +52,21 @@ export async function interpretUserIntent(userInput: string): Promise<Interpreta
       - 금기 사항: ${JSON.stringify(SHAMANIC_KNOWLEDGE.taboos)}
 
       해석 원칙:
-      1. 장식용 판타지가 아닌, 실제 무속인이 표현할 법한 정통성을 유지할 것.
-      2. 의례 목적에 맞는 신격과 무구, 공간을 선정할 것.
-      3. 금기 사항을 엄격히 준수할 것 (공포, 고어, 타 종교 상징 혼입 금지).
+      1. 장식용 판타지가 아닌, 실제 무당의 굿판이나 무신도에서 볼 법한 정통 무속 미학을 유지할 것.
+      2. 사후 세계 언급 시 '극락' 대신 무속의 '서천꽃밭'이나 '조상의 품'으로 해석할 것.
+      3. 금기 사항을 엄격히 준수할 것 (불교 사찰, 불상, 타 종교 상징 절대 금지).
 
       다음 JSON 형식으로 응답해줘:
       {
         "intent": "의도 카테고리",
         "selectedSymbols": ["선택된 문양/무구 ID 리스트"],
         "selectedColors": ["선택된 색채 ID 리스트"],
-        "deity": "선정된 신격 이름과 의미",
+        "deity": "선립된 신격 이름과 의미 (무속 고유 신명 우선)",
         "ritualPurpose": "선정된 제의 목적 이름과 의미",
-        "ritualSpace": "선정된 제의 공간 이름과 의미",
-        "composition": "장면 구성 방식 설명",
-        "explanation": "이 이미지가 왜 이렇게 구성되었는지에 대한 한국어 설명 (신격, 무구, 색채의 연관성 포함)",
-        "englishPrompt": "Stable Diffusion/DALL-E 스타일의 상세한 영어 프롬프트. 한국 무속의 정통성과 신비로움을 강조할 것."
+        "ritualSpace": "선정된 제의 공간 이름과 의미 (굿청, 성황당 등)",
+        "composition": "장면 구성 방식 (무속적 역동성 강조)",
+        "explanation": "이 이미지가 왜 이렇게 구성되었는지에 대한 한국어 설명",
+        "englishPrompt": "Detailed English prompt emphasizing authentic Korean Shamanic aesthetics. Focus on Musindo style, Osaek-cheon ribbons, and Mu-bok robes."
       }
     `,
     config: {
@@ -99,7 +100,6 @@ export async function interpretUserIntent(userInput: string): Promise<Interpreta
   }
 
   try {
-    // Clean up potential markdown code blocks if they exist (though responseMimeType should prevent them)
     const cleanedText = text.replace(/```json\n?|\n?```/g, "").trim();
     return JSON.parse(cleanedText);
   } catch (error) {
@@ -115,39 +115,36 @@ export async function generateShamanicImage(
   artStyle: string = 'musindo',
   resolution: '512px' | '1K' | '2K' | '4K' = '1K'
 ): Promise<string> {
-  // Map user requested ratios to API supported ones if necessary
   const supportedRatios: Record<string, string> = {
     "1:1": "1:1",
     "16:9": "16:9",
     "9:16": "9:16",
-    "2:3": "3:4", // Closest supported
-    "3:2": "4:3"  // Closest supported
+    "2:3": "3:4",
+    "3:2": "4:3"
   };
 
   const ratio = supportedRatios[aspectRatio] || "1:1";
 
   const artStylePrompts: Record<string, string> = {
-    'musindo': 'Traditional Korean Shamanic Deity painting (Musindo). Bold black outlines, vibrant Obangsaek colors, and heavy gold leaf accents. Formal and majestic.',
-    'minhwa': 'Korean Folk Art (Minhwa) style. Warm, earthy tones mixed with vibrant accents, expressive and slightly whimsical characters, detailed textures of traditional paper.',
-    'bulhwa': 'Korean Buddhist Painting (Bulhwa) style. Extremely intricate details, delicate lines, sophisticated color harmony, and a sense of divine serenity.',
-    'modern': 'Modern Shamanic Digital Art. A fusion of traditional Korean motifs with contemporary cinematic lighting, glowing spiritual effects, and high-definition textures.'
+    'musindo': 'Traditional Korean Shamanic Deity painting (Musindo). Bold black brush outlines, flat perspective, vibrant Obangsaek colors, and mystical energy. Authentic ritual art.',
+    'minhwa': 'Korean Folk Art (Minhwa) style. Warm textures, traditional paper feel, symbolic animals like tigers and cranes, and rich narrative details.',
+    'modern': 'Modern Shamanic Digital Art. Cinematic lighting, glowing Osaek-cheon ribbons, swirling spiritual energy, and high-definition Korean cultural motifs.'
   };
 
   const selectedArtStyle = artStylePrompts[artStyle] || artStylePrompts['musindo'];
 
   const systemPrompt = mode === 'vision' 
     ? `An authentic, high-quality ${selectedArtStyle}. ${prompt}. 
-       Key Features: Bold outlines, saturated Obangsaek colors (Red, Blue, Yellow, White, Black), and gold leaf (Kyeum-ni) highlights. 
-       Composition: Symmetrical or centered divine figures with radiant halos. Background features stylized "Iwol-obong-do" style mountains, swirling traditional clouds, and sacred symbols. 
-       Atmosphere: Majestic, powerful, and spiritually charged. 
-       Avoid: 3D render look, photorealism, horror, generic fantasy, Japanese/Chinese styles.`
+       Key Visuals: Shamanic ritual tools (Obanggi flags, bells, fans), traditional robes (Mu-bok), and sacred spaces like Seonang-dang with colorful ribbons.
+       Color Palette: Saturated Obangsaek (Red, Blue, Yellow, White, Black). 
+       Composition: Divine figures with majestic presence. Traditional shamanic patterns (Saljang).
+       CRITICAL: Strictly Korean Shamanism (Muism). NO Buddhism, NO Pagodas, NO Monks, NO Buddhist Statues, NO Japanese/Chinese temple styles.
+       Atmosphere: Powerful, sacred, and spiritually charged.`
     : `An authentic Korean Shamanic Talisman (Bujeok). ${prompt}.
-       Visual Style: Deep red cinnabar (Jusa) ink with visible brush strokes on aged yellow mulberry paper. 
-       Content: Mysterious, stylized abstract spiritual symbols and flowing calligraphic lines. 
-       Composition: Centered, vertical, with thick borders. 
-       Texture: Fibrous paper texture, slightly bleeding ink. 
-       CRITICAL: No readable text, no letters, no characters, no alphabet, no hangul, no hanja, no numbers. Only abstract spiritual symbols.
-       Avoid: Modern digital fonts, clean vector lines, unrelated occult symbols.`;
+       Visual Style: Deep red cinnabar (Jusa) ink on aged yellow mulberry paper. 
+       Content: Abstract spiritual symbols and flowing brush strokes. No readable text.
+       Composition: Centered, vertical, traditional talisman layout.
+       Avoid: Modern fonts, unrelated occult symbols, Buddhist motifs.`;
 
   const response = await getAIClient().models.generateContent({
     model: "gemini-3.1-flash-image-preview",

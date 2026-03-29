@@ -21,7 +21,6 @@ export function generateShamanicHtml(
   const artStyleNames: Record<string, string> = {
     'musindo': '무신도 (Deity Painting)',
     'minhwa': '민화 (Folk Art)',
-    'bulhwa': '불화 (Buddhist Painting)',
     'modern': '현대적 재해석 (Modern)'
   };
 
