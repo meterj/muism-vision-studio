@@ -200,8 +200,8 @@ export function generateShamanicHtml(
 <body>
     <div class="container">
         <header>
-            <h1>의도기원 (意圖祈願)</h1>
-            <div class="subtitle">Muism Vision Studio Report</div>
+            <h1>MUISM VISION V1.0</h1>
+            <div class="subtitle">의도기원 (意圖祈願) 리포트</div>
         </header>
 
         <div class="section">
@@ -258,7 +258,7 @@ export function generateShamanicHtml(
         </div>
 
         <footer>
-            © 2026 Muism Vision Studio · Generated via AI Studio
+            © 2026 MUISM VISION V1.0 · Generated via Shamanic AI Studio
         </footer>
     </div>
 </body>

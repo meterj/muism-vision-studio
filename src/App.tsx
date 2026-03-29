@@ -317,8 +317,8 @@ export default function App() {
             <Sparkles className="text-white w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight shamanic-gradient-text">의도기원 (意圖祈願)</h1>
-            <p className="text-xs uppercase tracking-[0.2em] text-white/40 font-mono">Muism Vision Studio</p>
+            <h1 className="text-xl font-bold tracking-tight shamanic-gradient-text">MUISM VISION V1.0</h1>
+            <p className="text-xs uppercase tracking-[0.2em] text-white/40 font-mono">의도기원 (意圖祈願)</p>
           </div>
         </div>
         <div className="flex gap-4">
@@ -1123,7 +1123,7 @@ export default function App() {
 
       <footer className="p-12 text-center border-t border-white/5 mt-12">
         <p className="text-sm text-white/20 uppercase tracking-[0.3em] font-mono">
-          © 2026 Muism Vision Studio · 의도기원 (意圖祈願)
+          © 2026 MUISM VISION V1.0 · 의도기원 (意圖祈願)
         </p>
       </footer>
     </div>
