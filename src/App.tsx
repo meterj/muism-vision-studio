@@ -38,8 +38,8 @@ export default function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<InterpretationResult | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [aspectRatio, setAspectRatio] = useState('1:1');
-  const [resolution, setResolution] = useState<'512px' | '1K' | '2K' | '4K'>('2K');
+  const [aspectRatio, setAspectRatio] = useState('9:16');
+  const [resolution, setResolution] = useState<'512px' | '1K' | '2K' | '4K'>('1K');
   const [genMode, setGenMode] = useState<'vision' | 'talisman'>('vision');
   const [selectedDeity, setSelectedDeity] = useState('');
   const [selectedPurpose, setSelectedPurpose] = useState('');
