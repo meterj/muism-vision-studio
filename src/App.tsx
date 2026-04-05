@@ -136,30 +136,35 @@ export default function App() {
   };
 
   const handleSupremeRitual = () => {
-    // Premium combinations for 'Supreme Spiritual Power'
-    const combinations = [
-      { deity: '산신령', purpose: '보호/벽사', space: '산신 제장', art: 'seokchae', visual: 'avatar', input: '태산의 정기를 품은 산신령의 위엄과 강력한 벽사의 기운' },
-      { deity: '용왕님', purpose: '복/재물', space: '바다/계곡', art: 'seokchae', visual: 'phenomenon', input: '심해의 여의주를 품은 용왕의 강림과 끝없는 재물의 파동' },
-      { deity: '칠성님', purpose: '건강/장수', space: '신단/신당', art: 'seokchae', visual: 'symbol', input: '북두칠성의 영롱한 빛이 내리는 수명장수와 무병발원의 서기' },
-      { deity: '바리공주', purpose: '천도/추모', space: '서천꽃밭', art: 'seokchae', visual: 'space', input: '만개한 서천꽃밭을 가로질러 망자를 인도하는 바리공주의 자비' },
-      { deity: '오방신장', purpose: '액막이 (Warding)', space: '굿청/마당', art: 'pillyeok', visual: 'avatar', input: '오방기가 휘날리는 가운데 악귀를 쳐내는 신장님들의 역동적인 기세' }
-    ];
+    // 1. Get all available options from SHAMANIC_KNOWLEDGE
+    const allDeities = SHAMANIC_KNOWLEDGE.deities.flatMap(cat => cat.items.map(item => item.name));
+    const allPurposes = SHAMANIC_KNOWLEDGE.ritual_purposes.map(p => p.name);
+    const allSpaces = SHAMANIC_KNOWLEDGE.ritual_spaces.map(s => s.name);
+    const allIntents = Object.keys(INTENT_CATEGORIES);
+    const artStyles = ['musindo', 'seokchae', 'pillyeok', 'minhwa', 'modern'];
+    const visualStyles = ['human', 'avatar', 'phenomenon', 'symbol', 'space'];
 
-    const pick = combinations[Math.floor(Math.random() * combinations.length)];
+    // 2. Pick random values
+    const randomDeity = allDeities[Math.floor(Math.random() * allDeities.length)];
+    const randomPurpose = allPurposes[Math.floor(Math.random() * allPurposes.length)];
+    const randomSpace = allSpaces[Math.floor(Math.random() * allSpaces.length)];
+    const randomIntent = allIntents[Math.floor(Math.random() * allIntents.length)];
+    const randomArt = artStyles[Math.floor(Math.random() * artStyles.length)];
+    const randomVisual = visualStyles[Math.floor(Math.random() * visualStyles.length)];
+
+    // 3. Update states
+    setSelectedDeity(randomDeity);
+    setSelectedPurpose(randomPurpose);
+    setSelectedSpace(randomSpace);
+    setArtStyle(randomArt as any);
+    setVisualStyle(randomVisual as any);
+    setIntensity(100); // 100% Traditional as requested
+    setAspectRatio('9:16'); // 9:16 as requested
+    setResolution('1K'); // 1K as requested
+    setInput(`${randomIntent}를 위한 최고의 영험과 신령한 기운`);
     
-    setSelectedDeity(pick.deity);
-    setSelectedPurpose(pick.purpose);
-    setSelectedSpace(pick.space);
-    setArtStyle(pick.art as any);
-    setVisualStyle(pick.visual as any);
-    setIntensity(100); // Always 100% traditional for supreme
-    setResolution('4K'); // Max quality
-    setInput(pick.input);
-    
-    // Add a slight delay to trigger generation for better UX
-    setTimeout(() => {
-      // Small visual feedback could go here
-    }, 100);
+    // Auto trigger generation if you want, but usually it's better to let user see the settings first
+    // handleGenerate();
   };
 
   const handleGenerate = async () => {
