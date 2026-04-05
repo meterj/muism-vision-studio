@@ -126,9 +126,11 @@ export async function generateShamanicImage(
   const ratio = supportedRatios[aspectRatio] || "1:1";
 
   const artStylePrompts: Record<string, string> = {
-    'musindo': 'Traditional Korean Shamanic Deity painting (Musindo). Bold black brush outlines, flat perspective, vibrant Obangsaek colors, and mystical energy. Authentic ritual art.',
-    'minhwa': 'Korean Folk Art (Minhwa) style. Warm textures, traditional paper feel, symbolic animals like tigers and cranes, and rich narrative details.',
-    'modern': 'Modern Shamanic Digital Art. Cinematic lighting, glowing Osaek-cheon ribbons, swirling spiritual energy, and high-definition Korean cultural motifs.'
+    'musindo': 'Traditional Korean Shamanic Deity painting (Musindo). Bold black brush outlines, flat perspective, vibrant Obangsaek colors, and a strong sense of divine icon worship.',
+    'seokchae': 'High-end authentic Shamanic art using Traditional Mineral Pigments (Seokchae). Deep, heavy textures of cinnabar red and indigo, multiple layers of natural pigments, authoritative and solemn atmosphere.',
+    'pillyeok': 'Shamanic art focused on Energetic Brushwork (Pillyeok). Powerful, fluid, and mystical ink lines that capture the raw "Gi" (spiritual energy) of the deity. Dynamic and spiritually charged.',
+    'minhwa': 'Korean Shamanic Folk Art (Minhwa) style. Humorous, narrative, and warm textures on old mulberry paper, depicting deities in a more storytelling and approachable way.',
+    'modern': 'Modern Shamanic Digital Art. Cinematic lighting, glowing Osaek-cheon ribbons, swirling spiritual energy, and high-definition Korean cultural motifs while preserving sacred iconography.'
   };
 
   const selectedArtStyle = artStylePrompts[artStyle] || artStylePrompts['musindo'];

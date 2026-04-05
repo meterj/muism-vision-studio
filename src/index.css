@@ -93,6 +93,23 @@ body {
   to { box-shadow: 0 0 25px rgba(255, 78, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2); }
 }
 
-.shamanic-text-glow {
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+.premium-active {
+  background: linear-gradient(135deg, rgba(255, 78, 0, 0.2) 0%, rgba(112, 0, 255, 0.1) 100%);
+  border-color: rgba(255, 150, 0, 0.5) !important;
+  box-shadow: 
+    0 0 15px rgba(255, 78, 0, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.premium-active::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, #ff4e00, #7000ff);
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0.3;
+  filter: blur(4px);
 }

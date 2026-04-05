@@ -46,7 +46,7 @@ export default function App() {
   const [selectedSpace, setSelectedSpace] = useState('');
   const [intensity, setIntensity] = useState(50); // 0: Modern, 100: Traditional
   const [visualStyle, setVisualStyle] = useState<'human' | 'symbol' | 'space' | 'avatar' | 'phenomenon'>('symbol');
-  const [artStyle, setArtStyle] = useState<'musindo' | 'minhwa' | 'modern' | 'classic' | 'royal'>('musindo');
+  const [artStyle, setArtStyle] = useState<'musindo' | 'seokchae' | 'pillyeok' | 'minhwa' | 'modern'>('musindo');
   const [history, setHistory] = useState<{
     input: string, 
     imageUrl: string, 
@@ -138,11 +138,11 @@ export default function App() {
   const handleSupremeRitual = () => {
     // Premium combinations for 'Supreme Spiritual Power'
     const combinations = [
-      { deity: '산신령', purpose: '보호/벽사', space: '산신 제장', art: 'classic', visual: 'avatar', input: '태산의 정기를 품은 산신령의 위엄과 강력한 벽사의 기운' },
-      { deity: '용왕님', purpose: '복/재물', space: '바다/계곡', art: 'royal', visual: 'phenomenon', input: '심해의 여의주를 품은 용왕의 강림과 끝없는 재물의 파동' },
-      { deity: '칠성님', purpose: '건강/장수', space: '신단/신당', art: 'classic', visual: 'symbol', input: '북두칠성의 영롱한 빛이 내리는 수명장수와 무병발원의 서기' },
-      { deity: '바리공주', purpose: '천도/추모', space: '서천꽃밭', art: 'royal', visual: 'space', input: '만개한 서천꽃밭을 가로질러 망자를 인도하는 바리공주의 자비' },
-      { deity: '오방신장', purpose: '액막이 (Warding)', space: '굿청/마당', art: 'classic', visual: 'avatar', input: '오방기가 휘날리는 가운데 악귀를 쳐내는 신장님들의 역동적인 기세' }
+      { deity: '산신령', purpose: '보호/벽사', space: '산신 제장', art: 'seokchae', visual: 'avatar', input: '태산의 정기를 품은 산신령의 위엄과 강력한 벽사의 기운' },
+      { deity: '용왕님', purpose: '복/재물', space: '바다/계곡', art: 'seokchae', visual: 'phenomenon', input: '심해의 여의주를 품은 용왕의 강림과 끝없는 재물의 파동' },
+      { deity: '칠성님', purpose: '건강/장수', space: '신단/신당', art: 'seokchae', visual: 'symbol', input: '북두칠성의 영롱한 빛이 내리는 수명장수와 무병발원의 서기' },
+      { deity: '바리공주', purpose: '천도/추모', space: '서천꽃밭', art: 'seokchae', visual: 'space', input: '만개한 서천꽃밭을 가로질러 망자를 인도하는 바리공주의 자비' },
+      { deity: '오방신장', purpose: '액막이 (Warding)', space: '굿청/마당', art: 'pillyeok', visual: 'avatar', input: '오방기가 휘날리는 가운데 악귀를 쳐내는 신장님들의 역동적인 기세' }
     ];
 
     const pick = combinations[Math.floor(Math.random() * combinations.length)];
@@ -188,10 +188,10 @@ export default function App() {
           visualStyle === 'avatar' ? '현신(Avatar)' : '영험 현상'
         }`,
         `예술 양식: ${
-          artStyle === 'musindo' ? '무신도' : 
-          artStyle === 'classic' ? '정통 무신도' : 
-          artStyle === 'royal' ? '궁중 채색화' : 
-          artStyle === 'minhwa' ? '민화' : '현대적'
+          artStyle === 'musindo' ? '무신도(기본)' : 
+          artStyle === 'seokchae' ? '정통 석채화(석채)' : 
+          artStyle === 'pillyeok' ? '신령한 필치(필력)' : 
+          artStyle === 'minhwa' ? '해학적 민속도' : '현대적 비전'
         }`
       ].filter(Boolean).join(', ');
 
@@ -484,50 +484,60 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="text-sm text-white/30 mr-2 font-mono">Art Style</span>
-              {[
-                { id: 'musindo', name: '무신도' },
-                { id: 'classic', name: '정통 무신도' },
-                { id: 'royal', name: '궁중 채색화' },
-                { id: 'minhwa', name: '민화' },
-                { id: 'modern', name: '현대적' }
-              ].map((style) => (
-                <button
-                  key={style.id}
-                  onClick={() => setArtStyle(style.id as any)}
-                  className={`px-3 py-1.5 rounded-lg text-[13px] font-bold transition-all border ${
-                    artStyle === style.id 
-                      ? 'bg-orange-600 border-orange-500 text-white shadow-lg shadow-orange-900/20' 
-                      : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {style.name}
-                </button>
-              ))}
+            <div className="space-y-3">
+              <label className="text-[10px] uppercase tracking-widest text-white/30 font-mono flex items-center gap-2">
+                <Palette className="w-3 h-3" />
+                Art Style (전통 화풍 선택)
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {[
+                  { id: 'musindo', name: '무신도(기본)' },
+                  { id: 'seokchae', name: '정통 석채화' },
+                  { id: 'pillyeok', name: '신령한 필치' },
+                  { id: 'minhwa', name: '해학적 민화' },
+                  { id: 'modern', name: '현대적 비전' }
+                ].map((style) => (
+                  <button
+                    key={style.id}
+                    onClick={() => setArtStyle(style.id as any)}
+                    className={`relative px-3 py-2 rounded-xl text-[12px] font-bold transition-all border overflow-hidden ${
+                      artStyle === style.id 
+                        ? 'premium-active border-transparent' 
+                        : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {style.name}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="text-sm text-white/30 mr-2 font-mono">Visual Style</span>
-              {[
-                { id: 'human', name: '인간형' },
-                { id: 'avatar', name: '현신(Avatar)' },
-                { id: 'phenomenon', name: '영험 현상' },
-                { id: 'symbol', name: '상징형' },
-                { id: 'space', name: '공간형' }
-              ].map((style) => (
-                <button
-                  key={style.id}
-                  onClick={() => setVisualStyle(style.id as any)}
-                  className={`px-3 py-1.5 rounded-lg text-[13px] font-bold transition-all border ${
-                    visualStyle === style.id 
-                      ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-900/20' 
-                      : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {style.name}
-                </button>
-              ))}
+            <div className="space-y-3">
+              <label className="text-[10px] uppercase tracking-widest text-white/30 font-mono flex items-center gap-2">
+                <Layers className="w-3 h-3" />
+                Visual Type (시각적 현신)
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {[
+                  { id: 'human', name: '인간형' },
+                  { id: 'avatar', name: '현신(Avatar)' },
+                  { id: 'phenomenon', name: '영험 현상' },
+                  { id: 'symbol', name: '상징 중심' },
+                  { id: 'space', name: '제의 공간' }
+                ].map((style) => (
+                  <button
+                    key={style.id}
+                    onClick={() => setVisualStyle(style.id as any)}
+                    className={`relative px-3 py-2 rounded-xl text-[12px] font-bold transition-all border overflow-hidden ${
+                      visualStyle === style.id 
+                        ? 'premium-active border-transparent' 
+                        : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {style.name}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 items-center justify-between">
